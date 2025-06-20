@@ -38,6 +38,7 @@ const NavBar = () => {
             {/* Register and Login links */}
             <Nav.Link href="/Register" className="text-white">Register</Nav.Link>
             <Nav.Link href="/Login" className="text-white">Login</Nav.Link>
+             <Nav.Link href="/Profile" className="text-white">Profile</Nav.Link>
              <Nav.Link href="/my-orders" className="text-white">My Orders</Nav.Link> 
             {/* Shopping Cart */}
             <Nav.Link href="/cart" className="text-white d-flex align-items-center">

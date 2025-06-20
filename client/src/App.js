@@ -4,7 +4,7 @@ import './App.css';
 import Home from './pages/Home/Home';
 import Resgister from './pages/register/Resgister';
 import Login from './pages/Login/Login';
-import Categories from './pages/Categories/Categories.jsx'
+
 import Error from './pages/Error/Error';
 import NavBar from './components/NavBar/NavBar';
 import Products from './pages/Products/Products.jsx';
@@ -14,6 +14,7 @@ import Balls from './pages/Products/Balls/Balls.jsx';
 import Accessoires from './pages/Products/Accessoires/Accessoires.jsx';
 import Basketball from './pages/Products/BasketBall Shirts/BasketBall-Jersey.jsx';
 import Footer from './components/Footer/Footer.jsx';
+import Profile from './pages/profile/Profile.jsx';
 
 
 function App() {
@@ -25,8 +26,8 @@ function App() {
        <Routes>
         <Route path ='/' element = {<Home/>} />
          <Route path ='/register' element = {<Resgister/>} />
-          <Route path ='/login' element = {<Login/>} />
-           <Route path ='/Categories' element = {<Categories/>} />
+          <Route path ='/Login' element = {<Login/>} />
+        <Route path ='/Profile' element = {<Profile/>} />
             <Route path ='/*' element = {<Error/>} />
              <Route path ='/Products' element = {<Products/>} />
              <Route path="/shoes" element={<Shoes />} />

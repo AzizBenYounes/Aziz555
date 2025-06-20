@@ -1,57 +1,66 @@
-import React, { useState } from 'react'
-import {Form, Button} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
-import { useDispatch } from 'react-redux';
-import { register } from '../../JS/action/auth.action';
-const Resgister = () => {
-  const [newUser, setNewUser] = useState({
-    name: "",
-    email: "", 
-    password: "",
-    phone: "",
-  })
-  const dispatch = useDispatch();
-  const handleChange = (e) => {
-    setNewUser({...newUser, [e.target.name]: e.target.value});
-  };
-  //console.log(newUser);
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const Register = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
   const handleRegister = (e) => {
     e.preventDefault();
-      dispatch(register(newUser));
-  }
-  return (
-    <div className ="container">
-      <h2>Create an Account</h2>
-        <Form onSubmit={handleRegister}>
-      <Form.Group className="mb-3" >
-        <Form.Label>Name:</Form.Label>
-        <Form.Control type="text" placeholder="Enter Your Name" name="name" value={newUser.name} onChange={handleChange} />
-      </Form.Group>
-          <Form.Group className="mb-3" >
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" name="email" value={newUser.email} onChange={handleChange} />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" name="password" value={newUser.password} onChange={handleChange} />
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label>Phone Number:</Form.Label>
-        <Form.Control type="tel" placeholder="Phone" name="phone" value={newUser.phone} onChange={handleChange} />
-      </Form.Group>
-        <p>
-          Already have an account?
-        <span> <Link to={"/Login"}> Login</Link></span>  
-          </p>
-      <Button variant="primary" type="submit">
-      Register
-      </Button>
-    </Form>
-    </div>
-  )
-}
 
-export default Resgister;
+    if (password !== confirmPassword) {
+      setError("Passwords don't match");
+      return;
+    }
+
+    // Save user to localStorage (for mock/demo only)
+    const user = { email, password };
+    localStorage.setItem('registeredUser', JSON.stringify(user));
+    navigate('/login');
+  };
+
+  return (
+    <div className="container mt-5" style={{ maxWidth: '400px' }}>
+      <h2>Register</h2>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <form onSubmit={handleRegister}>
+        <div className="form-group mb-3">
+          <label>Email address</label>
+          <input
+            type="email"
+            className="form-control"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            className="form-control"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <button className="btn btn-success" type="submit">Register</button>
+      </form>
+    </div>
+  );
+};
+
+export default Register;

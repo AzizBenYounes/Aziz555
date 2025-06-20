@@ -1,33 +1,57 @@
-import React from 'react'
-import { Button, Form } from 'react-bootstrap'
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // If using React Router
 
 const Login = () => {
-  return (
-    <div className='container'>
-      <h2>Login</h2>
-      <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-        
-                We'll never share your email with anyone else. 
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
-    
+  const handleLogin = (e) => {
+  e.preventDefault();
+
+  const registeredUser = JSON.parse(localStorage.getItem('registeredUser'));
+
+  if (
+    registeredUser &&
+    registeredUser.email === email &&
+    registeredUser.password === password
+  ) {
+    localStorage.setItem('user', JSON.stringify({ email }));
+    navigate('/'); // or any other page you want
+  } else {
+    setError('Invalid email or password');
+  }
+};
+  return (
+    <div className="container mt-5" style={{ maxWidth: '400px' }}>
+      <h2>Login</h2>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <form onSubmit={handleLogin}>
+        <div className="form-group mb-3">
+          <label>Email address</label>
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button className="btn btn-primary" type="submit">Login</button>
+      </form>
     </div>
-  )
-}
+  );
+};
 
 export default Login;
